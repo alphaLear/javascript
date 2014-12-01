@@ -127,7 +127,13 @@ function uuid(callback) {
     //    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
     //    return v.toString(16);
     //});
-    var u = Ti.Platform.createUUID();
+    var u;
+    if(Ti.App.Properties.hasProperty('uuid')){
+        u = Ti.App.Properties.getString('uuid');
+    }else{
+        u = Ti.Platform.createUUID();
+        Ti.App.Properties.setString('uuid', u);
+    }
     if (callback) callback(u);
     return u;
 }
